@@ -160,7 +160,7 @@ export const Expenses: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
         title={editingExpense ? 'تعديل بيانات المصروف' : 'تسجيل بند صرف جديد'}
       >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2 font-cairo">
           <div className="space-y-1">
             <label className="text-xs font-bold text-slate-500 block">بند المصروف *</label>
             <div className="relative">
@@ -179,7 +179,7 @@ export const Expenses: React.FC = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-500 block">المبلغ المصروف *</label>
               <div className="relative">

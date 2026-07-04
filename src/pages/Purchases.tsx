@@ -436,7 +436,7 @@ export const Purchases: React.FC = () => {
       >
         {selectedPurchase && (
           <div className="space-y-4 font-cairo">
-            <div className="grid grid-cols-2 gap-4 text-xs text-slate-500 border-b border-slate-100 pb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-500 border-b border-slate-100 pb-3">
               <div><span className="font-bold text-slate-700">المورد:</span> {selectedPurchase.supplier_name}</div>
               <div><span className="font-bold text-slate-700">التاريخ:</span> {selectedPurchase.date}</div>
             </div>

@@ -174,7 +174,7 @@ export const SupplierPayments: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
         title={editingPayment ? 'تعديل دفعة السداد' : 'تسجيل سداد نقدي لمورد'}
       >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2 font-cairo">
           <div className="space-y-1">
             <label className="text-xs font-bold text-slate-500 block">اختر المورد *</label>
             <select
@@ -190,7 +190,7 @@ export const SupplierPayments: React.FC = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-500 block">المبلغ المدفوع *</label>
               <div className="relative">

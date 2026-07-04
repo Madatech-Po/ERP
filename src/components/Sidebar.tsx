@@ -16,10 +16,12 @@ import {
 } from 'lucide-react';
 
 interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
   onOpenEndOfDay: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ onOpenEndOfDay }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onOpenEndOfDay }) => {
   const menuItems = [
     { name: 'لوحة التحكم', path: '/', icon: LayoutDashboard },
     { name: 'المنتجات', path: '/products', icon: Package },
@@ -35,7 +37,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenEndOfDay }) => {
   ];
 
   return (
-    <aside className="fixed top-0 right-0 h-screen w-64 bg-white border-l border-slate-100 flex flex-col z-30 shadow-[0_0_15px_rgba(0,0,0,0.02)]">
+    <>
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-30 lg:hidden transition-opacity"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar Drawer */}
+      <aside className={`fixed top-0 right-0 h-screen w-64 bg-white border-l border-slate-100 flex flex-col z-40 shadow-xl lg:shadow-[0_0_15px_rgba(0,0,0,0.02)] transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'} lg:translate-x-0`}>
       {/* Brand Header */}
       <div className="h-20 border-b border-slate-50 flex items-center px-6 gap-3">
         <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-200">
@@ -56,12 +68,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenEndOfDay }) => {
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 min-h-[44px] ${
                   isActive
                     ? 'bg-blue-50 text-blue-600 shadow-sm shadow-blue-50'
                     : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
                 }`
               }
+              onClick={onClose}
             >
               <Icon size={18} className="stroke-[2]" />
               <span>{item.name}</span>
@@ -81,6 +94,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onOpenEndOfDay }) => {
         </button>
       </div>
     </aside>
+    </>
   );
 };
 export default Sidebar;

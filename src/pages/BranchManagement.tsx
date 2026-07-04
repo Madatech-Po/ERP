@@ -355,7 +355,7 @@ export const BranchManagement: React.FC = () => {
             <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2"><ArrowRightLeft size={20} className="text-blue-600" /> نموذج تحويل بضاعة</h3>
             
             <form onSubmit={transferForm.handleSubmit(onSubmitTransfer)} className="space-y-6">
-              <div className="grid grid-cols-3 gap-5 bg-slate-50 p-5 rounded-2xl border border-slate-100">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 bg-slate-50 p-5 rounded-2xl border border-slate-100">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-500">تاريخ التحويل *</label>
                   <input type="date" {...transferForm.register('date')} defaultValue={new Date().toISOString().split('T')[0]} className="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:border-blue-500 focus:outline-none font-semibold" />
@@ -395,28 +395,33 @@ export const BranchManagement: React.FC = () => {
                 ) : (
                   <div className="space-y-3">
                     {transferLines.map((line, index) => (
-                      <div key={line.id} className="flex gap-4 items-center bg-white border border-slate-200 p-3 rounded-xl shadow-sm">
-                        <span className="text-slate-400 font-bold w-6">{index + 1}</span>
-                        <div className="flex-1">
+                      <div key={line.id} className="flex flex-col sm:flex-row gap-4 sm:items-center bg-white border border-slate-200 p-3 rounded-xl shadow-sm">
+                        <div className="flex items-center justify-between sm:w-auto">
+                          <span className="text-slate-400 font-bold w-6">{index + 1}</span>
+                          <button type="button" onClick={() => handleRemoveTransferLine(line.id)} className="sm:hidden w-10 h-10 flex items-center justify-center text-rose-500 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors">
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                        <div className="flex-1 w-full">
                           <select 
                             value={line.product_id}
                             onChange={(e) => handleUpdateTransferLine(line.id, 'product_id', e.target.value)}
-                            className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none font-bold"
+                            className="w-full px-4 py-3 min-h-[44px] bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none font-bold"
                           >
                             <option value="">-- اختر المنتج --</option>
                             {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                           </select>
                         </div>
-                        <div className="w-32 relative">
+                        <div className="w-full sm:w-32 relative">
                           <input 
                             type="number"
                             min="1"
                             value={line.quantity}
                             onChange={(e) => handleUpdateTransferLine(line.id, 'quantity', parseInt(e.target.value) || 0)}
-                            className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none font-bold text-center"
+                            className="w-full px-4 py-3 min-h-[44px] bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:outline-none font-bold text-center"
                           />
                         </div>
-                        <button type="button" onClick={() => handleRemoveTransferLine(line.id)} className="w-10 h-10 flex items-center justify-center text-rose-500 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors">
+                        <button type="button" onClick={() => handleRemoveTransferLine(line.id)} className="hidden sm:flex min-w-[44px] min-h-[44px] items-center justify-center text-rose-500 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors">
                           <Trash2 size={18} />
                         </button>
                       </div>
@@ -459,7 +464,7 @@ export const BranchManagement: React.FC = () => {
       {/* --- Branch Form Modal --- */}
       <Modal isOpen={isBranchModalOpen} onClose={() => setIsBranchModalOpen(false)} title={editingBranch ? 'تعديل بيانات فرع' : 'إضافة فرع جديد'}>
         <form onSubmit={branchForm.handleSubmit(onSubmitBranch)} className="space-y-5 mt-2">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-500">كود الفرع *</label>
               <input type="text" {...branchForm.register('code')} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:border-blue-500 focus:outline-none font-bold" />
@@ -495,24 +500,23 @@ export const BranchManagement: React.FC = () => {
               </div>
               {branchForm.formState.errors.address && <span className="text-rose-500 text-xs">{branchForm.formState.errors.address.message}</span>}
             </div>
-            <div className="space-y-1 col-span-2">
+            <div className="space-y-1 sm:col-span-2">
               <label className="text-xs font-bold text-slate-500">ملاحظات</label>
-              <textarea {...branchForm.register('notes')} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:border-blue-500 focus:outline-none resize-none" rows={2}></textarea>
+              <textarea {...branchForm.register('notes')} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:border-blue-500 focus:outline-none resize-none" rows={2}></textarea>
             </div>
           </div>
           
-          <div className="flex gap-3 pt-4 border-t border-slate-100">
-            <button type="submit" disabled={branchForm.formState.isSubmitting} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-bold shadow-md transition-all">حفظ البيانات</button>
-            <button type="button" onClick={() => setIsBranchModalOpen(false)} className="px-6 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-sm font-bold transition-all">إلغاء</button>
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
+            <button type="submit" disabled={branchForm.formState.isSubmitting} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-sm font-bold shadow-md transition-all min-h-[44px]">حفظ البيانات</button>
+            <button type="button" onClick={() => setIsBranchModalOpen(false)} className="px-6 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-xl text-sm font-bold transition-all min-h-[44px] w-full sm:w-auto">إلغاء</button>
           </div>
         </form>
       </Modal>
 
-      {/* --- View Transfer Modal --- */}
       <Modal isOpen={isTransferModalOpen} onClose={() => setIsTransferModalOpen(false)} title={`تفاصيل إذن تحويل: ${viewingTransfer?.transfer_number}`}>
         {viewingTransfer && (
           <div className="space-y-6 mt-2">
-            <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-sm">
               <div>
                 <span className="block text-slate-400 text-xs font-bold mb-1">من فرع</span>
                 <span className="font-bold text-slate-800">{getBranchName(viewingTransfer.from_branch_id)}</span>

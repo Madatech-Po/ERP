@@ -27,6 +27,7 @@ import { BranchManagement } from './pages/BranchManagement';
 // Inner layout to access Toast context
 const AppLayout: React.FC = () => {
   const [isEndOfDayOpen, setIsEndOfDayOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [todayFinancials, setTodayFinancials] = useState({
     revenue: 0,
     cogs: 0,
@@ -80,17 +81,21 @@ const AppLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-slate-50 flex no-print">
       {/* Right Sidebar */}
-      <Sidebar onOpenEndOfDay={handleOpenEndOfDay} />
+      <Sidebar 
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        onOpenEndOfDay={handleOpenEndOfDay} 
+      />
 
       {/* Main Container */}
-      <div className="flex-1 pr-64 flex flex-col min-h-screen">
+      <div className="flex-1 lg:pr-64 flex flex-col min-h-screen w-full">
         {/* Top Header */}
-        <Header />
+        <Header onMenuToggle={() => setIsMobileMenuOpen(true)} />
 
         {/* Main Content Area */}
-        <main className="flex-1 p-8 overflow-y-auto max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-w-7xl w-full mx-auto">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />

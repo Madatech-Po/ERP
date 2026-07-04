@@ -177,7 +177,7 @@ export const DailySales: React.FC = () => {
                                 step="0.01"
                                 value={qty || ''}
                                 onChange={(e) => handleQuantityChange(p.id, Number(e.target.value))}
-                                className={`w-28 px-3 py-1.5 border rounded-xl text-center font-bold text-sm focus:outline-none transition-all ${
+                                className={`w-28 px-3 py-2.5 min-h-[44px] border rounded-xl text-center font-bold text-sm focus:outline-none transition-all ${
                                   hasSale 
                                     ? 'border-blue-400 bg-blue-50/40 text-blue-700 focus:border-blue-600 focus:bg-white' 
                                     : 'border-slate-150 bg-slate-50/50 text-slate-800 focus:border-blue-500 focus:bg-white'

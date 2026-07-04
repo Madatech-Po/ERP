@@ -268,7 +268,7 @@ export const Products: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
         title={editingProduct ? 'تعديل بيانات المنتج' : 'إضافة منتج جديد'}
       >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 font-cairo">
           
           {/* Image Upload Area */}
           <div className="flex flex-col items-center justify-center p-4 border border-dashed border-slate-200 rounded-2xl bg-slate-50/50 hover:bg-slate-50 transition-colors relative group">
@@ -298,8 +298,8 @@ export const Products: React.FC = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1 col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1 col-span-1 sm:col-span-2">
               <label className="text-xs font-bold text-slate-500 block">اسم المنتج *</label>
               <input
                 type="text"
